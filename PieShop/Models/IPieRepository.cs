@@ -4,6 +4,6 @@
     {
         IEnumerable<Pie> AllPies { get; }
         IEnumerable<Pie> PiesOfTheWeek { get; }
-        Pie? GetPieById (int Pieid);
+        Pie? GetPieById (int pieid);
     }
 }
