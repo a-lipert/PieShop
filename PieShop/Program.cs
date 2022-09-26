@@ -1,6 +1,6 @@
 using PieShop.Models;
 using Microsoft.EntityFrameworkCore;
-
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +13,18 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    }); 
+        
 builder.Services.AddDbContext<PieShopDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["ConnectionStrings:PieShopDbContextConnectionString"]);
 });
+
+
 var app = builder.Build();
 
 app.UseStaticFiles();

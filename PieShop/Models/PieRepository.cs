@@ -26,9 +26,14 @@ namespace PieShop.Models
                 return _pieShopDbContext.Pies.Include(c => c.Category).Where(p=> p.IsPieOfTheWeek);
             }
         }
-    public Pie? GetPieById(int pieid)
+    public Pie? GetPieById(int pieId)
         {
-                return _pieShopDbContext.Pies.FirstOrDefault(p=>p.PieId == pieid);
+                return _pieShopDbContext.Pies.FirstOrDefault(p=>p.PieId == pieId);
+        }
+
+        public IEnumerable<Pie> SearchPies(string searchQuery)
+        {
+            return _pieShopDbContext.Pies.Where(p=>p.Name.Contains(searchQuery));
         }
     }
 }
