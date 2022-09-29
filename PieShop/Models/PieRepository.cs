@@ -26,7 +26,7 @@ namespace PieShop.Models
                 return _pieShopDbContext.Pies.Include(c => c.Category).Where(p=> p.IsPieOfTheWeek);
             }
         }
-    public Pie? GetPieById(int pieId)
+        public Pie? GetPieById(int pieId)
         {
                 return _pieShopDbContext.Pies.FirstOrDefault(p=>p.PieId == pieId);
         }
