@@ -25,7 +25,7 @@ namespace PieShop.Controllers.Api
         public IActionResult GetById(int id)
         {
             if (!_pieRepository.AllPies.Any(p => p.PieId == id))
-                return NotFound();
+                return NotFound(); //404
             return Ok(_pieRepository.AllPies.Where(p => p.PieId == id));
         }
 
@@ -35,7 +35,7 @@ namespace PieShop.Controllers.Api
             IEnumerable<Pie> pies = new List<Pie>();
             if(!string.IsNullOrEmpty(searchQuery))
             {
-                _pieRepository.SearchPies(searchQuery);
+                pies = _pieRepository.SearchPies(searchQuery);
             }
             return new JsonResult(pies);
 
