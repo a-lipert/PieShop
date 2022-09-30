@@ -1,8 +1,13 @@
 using PieShop.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("PieShopDbContextConnectionString") ?? throw new InvalidOperationException("Connection string 'PieShopDbContextConnectionString' not found.");
+
+builder.Services.AddDbContext<PieShopDbContext>(options =>
+options.UseSqlServer(connectionString)); ;
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPieRepository, PieRepository>();
@@ -17,12 +22,12 @@ builder.Services.AddControllersWithViews()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    }); 
-        
-builder.Services.AddDbContext<PieShopDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:PieShopDbContextConnectionString"]);
-});
+    });
+
+
+
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddEntityFrameworkStores<PieShopDbContext>(); ;
 
 
 var app = builder.Build();
@@ -39,6 +44,8 @@ if(app.Environment.IsDevelopment())
 app.UseDeveloperExceptionPage();
 
 app.MapDefaultControllerRoute();
+app.MapRazorPages();
+app.UseAuthorization();
 
 DbInitializer.Seed(app);
 
