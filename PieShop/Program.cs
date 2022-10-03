@@ -35,8 +35,10 @@ var app = builder.Build();
 app.UseStaticFiles();
 app.UseSession();
 app.UseAuthentication();
+app.UseAuthorization();
 
-if(app.Environment.IsDevelopment())
+
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
 }
@@ -45,7 +47,6 @@ app.UseDeveloperExceptionPage();
 
 app.MapDefaultControllerRoute();
 app.MapRazorPages();
-app.UseAuthorization();
 
 DbInitializer.Seed(app);
 

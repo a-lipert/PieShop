@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PieShop.Models;
 
 namespace PieShop.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IShoppingCart _shoppingCart;
@@ -12,7 +14,7 @@ namespace PieShop.Controllers
         {
             _orderRepository = orderRepository;
             _shoppingCart = shoppingCart;
-        }
+        } 
 
         public IActionResult Checkout()//GET => HttpGet is default
         {
